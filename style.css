@@ -1,6 +1,6 @@
 .section-top {
   position: absolute;
-  height: 40%;
+  height: 45%;
   width: 100%;
   background-color: #E5F3F2;
   font-family: 'Roboto Slab', serif;
@@ -55,12 +55,17 @@ input {
   background-color: #045E55;
 }
 
+.save-idea:disabled {
+  background-color: #6D6E71;
+}
+
 .section-bottom{
   position: absolute;
-  top: 40%;
+  top: 45%;
   width: 100%;
-  height: 60%;
+  height: 55%;
   font-family: 'Open Sans', sans-serif;
+  overflow: scroll;
 }
 
 .search {
