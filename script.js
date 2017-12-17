@@ -8,6 +8,7 @@ $('.section-bottom').on('click', '.up-vote', upvoteQuality);
 $('.section-bottom').on('click', '.down-vote', downvoteQuality);
 $('.section-bottom').on('focusout', '.idea-title', modifiedTitle);
 $('.section-bottom').on('focusout', '.idea-content', modifiedBody);
+$('.search-input').on('keyup', searchIdeaCards);
 
 restoreSavedIdeas();
 
@@ -138,4 +139,24 @@ function modifiedBody() {
   parsedObject.body = body;
   var stringObject = JSON.stringify(parsedObject);
   localStorage.setItem(`${$key}`, stringObject);
+}
+
+function searchIdeaCards() {
+  var searchInput = $('.search-input').val();
+  console.log(searchInput)
+  var title = $('.idea-title');
+  console.log(title);
+  var body = $('.idea-content');
+  console.log(body);
+  for (var i = 0; i < title.length; i ++){
+    for (var x = 0; x < body.length; x ++){
+      if (($(title[i]).text().includes(searchInput)) || ($(body[i]).text().includes(searchInput))) {
+        console.log($(title[i]).text());
+        $(title[i]).parent().show();
+      } else {
+        console.log(1);
+        $(title[i]).parent().hide();
+      }
+    }
+  }
 }
