@@ -25,7 +25,7 @@ function createIdeaCard (event){
       <p class="idea-content" contenteditable="true"> ${$inputBody.val()}</p>
       <button class="up-vote"></button>
       <button class="down-vote"></button>
-      <p class="idea-quality">quality; <span class="quality">${$quality}</span></p>
+      <p class="idea-quality">quality: <span class="quality">${$quality}</span></p>
     </article>`)
   $('.idea-card').data('title', `${$inputTitle.val()}`);
   $('.idea-card').data('body', `${$inputBody.val()}`);
@@ -45,23 +45,20 @@ function IdeaCardObject (title, body, id, quality) {
 
 function restoreSavedIdeas () {
   for (var i = 0; i < localStorage.length; i ++) {
-    console.log(localStorage.getItem(localStorage.key(i)));
     var storedIdea = localStorage.getItem(localStorage.key(i));
     var parsedIdea = JSON.parse(storedIdea);
-    console.log(parsedIdea);
     $('.section-bottom').prepend(`<article id="${parsedIdea.id}" class="idea-card">
       <button class="delete-idea"></button>
       <h2 class="idea-title" contenteditable="true"> ${parsedIdea.title}</h2>
       <p class="idea-content" contenteditable="true"> ${parsedIdea.body}</p>
       <button class="up-vote"></button>
       <button class="down-vote"></button>
-      <p class="idea-quality">quality; <span class="quality">${parsedIdea.quality}</span></p>
+      <p class="idea-quality">quality: <span class="quality">${parsedIdea.quality}</span></p>
     </article>`)
     $('.idea-card').data('title', `${parsedIdea.title}`);
     $('.idea-card').data('body', `${parsedIdea.body}`);
     $('.idea-card').data('id', `${parsedIdea.id}`);
     $('.idea-card').data('quality', `${parsedIdea.quality}`)
-    console.log($('.idea-card').data());
   }
 }
 
@@ -74,7 +71,6 @@ function enableSaveButton () {
 }
 
 function deleteIdeaCard() {
-  console.log($(this).parent().data());
   var $key = ($(this).parent().attr('id'));
   localStorage.removeItem($key);
   $(this).parent().remove();
@@ -123,7 +119,7 @@ function modifiedQuality(x, y) {
 
 function modifiedTitle() {
   var $key = ($(this).parent().attr('id'));
-  var title = $('.idea-title').text();
+  var title = $(this).text();
   var getObject = localStorage.getItem($key);
   var parsedObject = JSON.parse(getObject);
   parsedObject.title = title;
@@ -133,7 +129,7 @@ function modifiedTitle() {
 
 function modifiedBody() {
   var $key = ($(this).parent().attr('id'));
-  var body = $('.idea-content').text();
+  var body = $(this).text();
   var getObject = localStorage.getItem($key);
   var parsedObject = JSON.parse(getObject);
   parsedObject.body = body;
@@ -143,18 +139,13 @@ function modifiedBody() {
 
 function searchIdeaCards() {
   var searchInput = $('.search-input').val();
-  console.log(searchInput)
   var title = $('.idea-title');
-  console.log(title);
   var body = $('.idea-content');
-  console.log(body);
   for (var i = 0; i < title.length; i ++){
     for (var x = 0; x < body.length; x ++){
-      if (($(title[i]).text().includes(searchInput)) || ($(body[i]).text().includes(searchInput))) {
-        console.log($(title[i]).text());
+      if (($(title[i]).text().toLowerCase().includes(searchInput.toLowerCase())) || ($(body[i]).text().toLowerCase().includes(searchInput.toLowerCase()))) {
         $(title[i]).parent().show();
       } else {
-        console.log(1);
         $(title[i]).parent().hide();
       }
     }
